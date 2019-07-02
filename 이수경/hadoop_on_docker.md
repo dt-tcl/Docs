@@ -1,10 +1,12 @@
 # Docker(CentOS 7) 환경에 Hadoop 설치
+- google cloud paltform vm 생성해서 테스트 진행
 
-## 실행 서비스
-master : namenode, resource manager
-slave01 : secondary namenode, nodemanager, datanode
-slave02 : nodemanager, datanode
-slave03 : nodemanager, datanode
+## 클러스터 구성
+| master | slave01 | slave02 | slave03 |
+|--------|--------|--------|--------|
+| Namenode | Secondary Namenode | - | - |
+| Resource Manager | Node Manager | Node Manager | Node Manager |
+| - | Datanode | Datanode | Datanode |
 
 ## CentOS 7 Base 이미지 생성
 ### 1) Dockerfile 생성
