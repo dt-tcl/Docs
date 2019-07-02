@@ -114,8 +114,10 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
 export CLASS_PATH=$JAVA_HOME/lib:$CLASS_PATH
 [root@7a60d11c5cc2 sue]# source ~/.bashrc
+```
 
 ### 5) hadoop 2.9.1 설정
+```bash
 [root@fe721fca7bb5 hadoop]# cd $HADOOP_CONF_DIR
 
 [root@fe721fca7bb5 hadoop]# vi hadoop-env.sh
@@ -214,7 +216,7 @@ slave03
 </configuration>
 ```
 
-### 5) ssh 설치 및 설정
+### 6) ssh 설치 및 설정
 ```bash
 [root@fe721fca7bb5 hadoop]# yum -y install openssh-server openssh-clients openssh-askpass
 [root@fe721fca7bb5 hadoop]# cd ~/
@@ -225,14 +227,14 @@ slave03
 [root@fe721fca7bb5 hadoop]# mkdir /var/run/sshd
 ```
 
-### 6) Hadoop docker 이미지 생성
+### 7) Hadoop docker 이미지 생성
 ```bash
 ctrl + p, ctrl + q
 [suetest723@node1 ~]$ sudo docker commit centos7-base centos7:hadoop
 [suetest723@node1 ~]$ sudo docker rm -f centos7-base
 ```
 
-### 7) Docker 이미지를 이용한 hadoop node(master, slave01, slave02, slave03) 생성
+### 8) Docker 이미지를 이용한 hadoop node(master, slave01, slave02, slave03) 생성
 ```bash
 [suetest723@node1 ~]$ sudo docker run --privileged -d -h master --name master -p 50070:50070 centos7:hadoop init
 [suetest723@node1 ~]$ sudo docker exec -it master bash
@@ -248,7 +250,7 @@ ctrl + p, ctrl + q
 ctrl + p, ctrl + q
 ```
 
-### 8) Hadoop node IP 설정
+### 9) Hadoop node IP 설정
 ```bash
 # container ip 조사
 [suetest723@node1 ~]$ sudo docker inspect -f '{{ .NetworkSettings.IPAddress }}' master
@@ -271,14 +273,14 @@ ctrl + p, ctrl + q
 ctrl + p, ctrl + q
 ```
 
-### 9) 각 컨테이너(master,slave01,slave02,slave03)에 접속해서 SSH 설정
+### 10) 각 컨테이너(master,slave01,slave02,slave03)에 접속해서 SSH 설정
 ```bash
 [suetest723@node1 ~]$ sudo docker attach master
 [root@master /]# systemctl restart sshd
 ctrl + p, ctrl + q
 ```
 
-### 10) master 접속해서 namenode directory 설정 및 hadoop 시작
+### 11) master 접속해서 namenode directory 설정 및 hadoop 시작
 ```bash
 [root@master /]# mkdir -p /home/sue/hadoop-2.9.1/hdfs/dfs/name
 [root@master /]# hadoop namenode -format
