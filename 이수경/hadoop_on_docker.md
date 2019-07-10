@@ -92,39 +92,38 @@ centos7-base        7.4                 ae734322575e        19 hours ago        
 
 ### 2) Java 설치
 ```bash
-[root@fe721fca7bb5 /]# yum install java-1.8.0-openjdk, java-1.8.0-openjdk-devel
+[root@fe721fca7bb5 /]# yum -y install java-1.8.0-openjdk, java-1.8.0-openjdk-devel
 [root@fe721fca7bb5 /]# java -version
 [root@fe721fca7bb5 /]# javac -version
 ```
 
-### 3) Hadoop 2.9.1 설치
+### 3) Hadoop 2.6.5 설치
 ```bash
-[root@fe721fca7bb5 /]# yum install wget
-[root@fe721fca7bb5 /]# cd /home
-[root@fe721fca7bb5 /]# mkdir sue
-[root@fe721fca7bb5 /]# cd sue/
-[root@fe721fca7bb5 sue]# wget http://mirrors.sonic.net/apache/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz
-[root@fe721fca7bb5 sue]# tar xvzf hadoop-2.9.1.tar.gz
+[root@fe721fca7bb5 /]# yum -y install wget
+[root@fe721fca7bb5 /]# mkdir -p /home/sue
+[root@fe721fca7bb5 /]# cd /home/sue
+[root@fe721fca7bb5 sue]# wget http://mirrors.sonic.net/apache/hadoop/common/hadoop-2.6.5/hadoop-2.6.5.tar.gz
+[root@fe721fca7bb5 sue]# tar xvzf hadoop-2.6.5.tar.gz
 ```
 
 ### 4) 환경 변수 설정
 ```bash
 [root@fe721fca7bb5 sue]# vi ~/.bashrc
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64
-export HADOOP_HOME=/home/sue/hadoop-2.9.1
+export HADOOP_HOME=/home/sue/hadoop-2.6.5
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
 export CLASS_PATH=$JAVA_HOME/lib:$CLASS_PATH
 [root@7a60d11c5cc2 sue]# source ~/.bashrc
 ```
 
-### 5) hadoop 2.9.1 설정
+### 5) hadoop 2.6.5 설정
 ```bash
 [root@fe721fca7bb5 hadoop]# cd $HADOOP_CONF_DIR
 
 [root@fe721fca7bb5 hadoop]# vi hadoop-env.sh
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64
-export HADOOP_HOME=/home/sue/hadoop-2.9.1
+export HADOOP_HOME=/home/sue/hadoop-2.6.5
 export HADOOP_MAPRED_HOME=$HADOOP_HOME
 export HADOOP_COMMON_HOME=$HADOOP_HOME
 export HADOOP_HDFS_HOME=$HADOOP_HOME
@@ -134,7 +133,7 @@ export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
 [root@fe721fca7bb5 hadoop]# vi yarn-env.sh
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64
-export HADOOP_HOME=/home/sue/hadoop-2.9.1
+export HADOOP_HOME=/home/sue/hadoop-2.6.5
 export HADOOP_MAPRED_HOME=$HADOOP_HOME
 export HADOOP_COMMON_HOME=$HADOOP_HOME
 export HADOOP_HDFS_HOME=$HADOOP_HOME
@@ -155,11 +154,11 @@ slave03
    </property>
    <property>
       <name>hadoop.tmp.dir</name>
-      <value>/home/sue/hadoop-2.9.1/hdfs/</value>
+      <value>/home/sue/hadoop-2.6.5/hdfs/</value>
    </property>
 </configuration>
 
-[root@fe721fca7bb5 hadoop]# mkdir /home/sue/hadoop-2.9.1/hdfs/
+[root@fe721fca7bb5 hadoop]# mkdir -p /home/sue/hadoop-2.6.5/hdfs/dfs/name
 
 [root@fe721fca7bb5 hadoop]# vi hdfs-site.xml
 <configuration>
@@ -232,22 +231,22 @@ slave03
 ### 7) Hadoop docker 이미지 생성
 ```bash
 ctrl + p, ctrl + q
-[suetest723@node1 ~]$ sudo docker commit centos7-base centos7:hadoop
+[suetest723@node1 ~]$ sudo docker commit centos7-base hadoop-docker:2.6.5
 [suetest723@node1 ~]$ sudo docker rm -f centos7-base
 ```
 
 ### 8) Docker 이미지를 이용한 hadoop node(master, slave01, slave02, slave03) 생성
 ```bash
-[suetest723@node1 ~]$ sudo docker run --privileged -d -h master --name master -p 50070:50070 centos7:hadoop init
+[suetest723@node1 ~]$ sudo docker run --privileged -d -h master --name master -p 50070:50070 hadoop-docker:2.6.5 init
 [suetest723@node1 ~]$ sudo docker exec -it master bash
 ctrl + p, ctrl + q
-[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave01 --name slave01 --link master:master centos7:hadoop init
+[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave01 --name slave01 --link master:master hadoop-docker:2.6.5 init
 [suetest723@node1 ~]$ sudo docker exec -it slave01 bash
 ctrl + p, ctrl + q
-[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave02 --name slave02 --link master:master centos7:hadoop init
+[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave02 --name slave02 --link master:master hadoop-docker:2.6.5 init
 [suetest723@node1 ~]$ sudo docker exec -it slave02 bash
 ctrl + p, ctrl + q
-[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave03 --name slave03 --link master:master centos7:hadoop init
+[suetest723@node1 ~]$ sudo docker run --privileged -d -h slave03 --name slave03 --link master:master hadoop-docker:2.6.5 init
 [suetest723@node1 ~]$ sudo docker exec -it slave03 bash
 ctrl + p, ctrl + q
 ```
@@ -282,9 +281,8 @@ ctrl + p, ctrl + q
 ctrl + p, ctrl + q
 ```
 
-### 11) master 접속해서 namenode directory 설정 및 hadoop 시작
+### 11) master 접속해서 namenode format 및 hadoop 시작
 ```bash
-[root@master /]# mkdir -p /home/sue/hadoop-2.9.1/hdfs/dfs/name
 [root@master /]# hadoop namenode -format
 [root@master /]# start-all.sh
 
@@ -308,7 +306,7 @@ ctrl + p, ctrl + q
 2364 NodeManager
 
 # hdfs server 정보 확인
-[root@master /]# /home/sue/hadoop-2.9.1/binbin/hadoop dfsadmin -report
+[root@master /]# /home/sue/hadoop-2.6.5/bin/hadoop dfsadmin -report
 DEPRECATED: Use of this script to execute hdfs command is deprecated.
 Instead use the hdfs command for it.
 Configured Capacity: 257655189504 (239.96 GB)
@@ -344,7 +342,7 @@ Xceivers: 1
 ```bash
 [root@master ~]# hdfs dfs -mkdir -p /user/root/input
 [root@master ~]# hdfs dfs -put ~/README.txt /user/root/input/
-[root@master ~]# hadoop jar /home/sue/hadoop-2.9.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.1.jar wordcount input output
+[root@master ~]# hadoop jar /home/sue/hadoop-2.6.5/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.5.jar wordcount input output
 19/07/01 09:31:20 INFO client.RMProxy: Connecting to ResourceManager at master/172.17.0.2:8040
 19/07/01 09:31:21 INFO input.FileInputFormat: Total input files to process : 1
 19/07/01 09:31:22 INFO mapreduce.JobSubmitter: number of splits:1
