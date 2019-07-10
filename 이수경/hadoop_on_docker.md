@@ -15,7 +15,7 @@
 [suetest723@node1 ~]$ mkdir -p docker-images/centos7-base
 [suetest723@node1 ~]$ cd docker-images/centos7-base
 [suetest723@node1 centos7-base]$ vi Dockerfile
-Dockerfile
+
 FROM docker.io/centos:7.4.1708
 # 사용자 지정
 USER root
@@ -84,10 +84,10 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 ## Hadoop 설치
 ### 1) 컨테이너 실행
 ```bash
-[suetest723@node1 hadoop-2.9.0]$ sudo docker images
+[suetest723@node1 ~]$ sudo docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 centos7-base        7.4                 ae734322575e        19 hours ago        557MB
-[suetest723@node1 hadoop-2.9.0]$ sudo docker run -ti --name=centos7-base centos7-base:7.4
+[suetest723@node1 ~]$ sudo docker run -ti --name=centos7-base centos7-base:7.4
 ```
 
 ### 2) Java 설치
