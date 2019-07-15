@@ -11,28 +11,31 @@
 * 100% Open Source(Go언어로 개발) - https://github.com/kubernetes/kubernetes
 
 ### Kubernetes의 특징 
->Automatic bin packing
->>가용성을 희생하지 않는 범위 내에서 리소스를 충분히 활용하여 Container를 배치
+* Automatic bin packing
+    * 가용성을 희생하지 않는 범위 내에서 리소스를 충분히 활용하여 Container를 배치
 
->Self-Healing
->>Container의 실행 실패, node가 죽거나 반응이 없는 경우, Health Check에 실패한 경우 해당 Container를 자동으로 복구
+* Self-Healing
+    * Container의 실행 실패, node가 죽거나 반응이 없는 경우, Health Check에 실패한 경우 해당 Container를 자동으로 복구
 
->Horizontal scaling
->>pod의 CPU 사용이나 App이 제공하는 Metic을 기반으로 ReplicaSet을 scaling 가능
+* Horizontal scaling
+    * pod의 CPU 사용이나 App이 제공하는 Metic을 기반으로 ReplicaSet을 scaling 가능
 
->Service discovery and Load balancing
->>익숙하지 않은 Service Discovery 매커니즘을 위해 Application을 수정할 필요가 없음\
->>Container에 고유 IP, 단일 DNS를 제공하고 이를 이용하여 Load Balancing
+* Service discovery and Load balancing
+    * 익숙하지 않은 Service Discovery 매커니즘을 위해 Application을 수정할 필요가 없음\
+    * Container에 고유 IP, 단일 DNS를 제공하고 이를 이용하여 Load Balancing
 
->Automated rollouts and rollbacks
->>Application, Configuration의 변경이 있을 경우, 전체 인스턴스의 중단이 아닌, 점진적으로 Container에 적용(Rolling update)\
->>변경 내용에 문제가 있을 경우 자동으로 Rollback 진행
->Secret and configuration management
->>Secret Key, Configuration을 이미지 변경 없이 업데이트 및 외부 노출(expose)없이 관리/사용 가능
->Storage orchestration
->>Local storage를 비롯하여 Public Cloud(GCP, AWS, Softlayer 등), Network Storage등을 구미에 맞게 자동 Mount 가능
->Batch Execution
->>Batch, CI 작업의 수행 관리 가능 실패시 Container Replace 가능
+* Automated rollouts and rollbacks
+    * Application, Configuration의 변경이 있을 경우, 전체 인스턴스의 중단이 아닌, 점진적으로 Container에 적용(Rolling update)\
+    * 변경 내용에 문제가 있을 경우 자동으로 Rollback 진행
+
+* Secret and configuration management
+    * Secret Key, Configuration을 이미지 변경 없이 업데이트 및 외부 노출(expose)없이 관리/사용 가능
+
+* Storage orchestration
+    * Local storage를 비롯하여 Public Cloud(GCP, AWS, Softlayer 등), Network Storage등을 구미에 맞게 자동 Mount 가능
+
+* Batch Execution
+    * Batch, CI 작업의 수행 관리 가능 실패시 Container Replace 가능
 
 
 Kubernetes 아키텍처
