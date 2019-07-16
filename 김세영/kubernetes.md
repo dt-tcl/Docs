@@ -1,16 +1,14 @@
-# Kubernetes
-
-## Kubernetes 소개
+# Kubernetes 소개
 ![Alt text](image/kubernetes.png)
 
-### Kubernetes란?
+## Kubernetes란?
 * Kubernetes는 Docker등과 같은 Container를 위한 Open Source Orchestration System
 * 약 10여년 전, Google이 Container Management를 위해 개발한 Borg에서 시작, Omega를 거쳐 Kubernetes가 탄생
 * 그리스 어로 배의 조타수를 의미(영어로는 Helmsman)
 * Kubernetes 가운데 여덟글자를 생략하여 K8s라고 표기하기도 함
 * 100% Open Source(Go언어로 개발) - https://github.com/kubernetes/kubernetes
 
-### Kubernetes의 특징 
+## Kubernetes의 특징 
 * Automatic bin packing
     * 가용성을 희생하지 않는 범위 내에서 리소스를 충분히 활용하여 Container를 배치
 
@@ -38,19 +36,19 @@
     * Batch, CI 작업의 수행 관리 가능 실패시 Container Replace 가능
 
 
-Kubernetes 아키텍처
-Kubernetes에서는 Kubernetes Master와 1개 이상의 Node(Worker)로 이루어진 가상/물리 머신의 Set을 통해 Cluster를 구성
+## Kubernetes 아키텍처
+* Kubernetes에서는 Kubernetes Master와 1개 이상의 Node(Worker)로 이루어진 가상/물리 머신의 Set을 통해 Cluster를 구성
+![Alt text](image/kube_archi.png)
 
-
-Kubernetes Master
-Kubernetes Cluster의 Main Component
-API Server(kube-apiserver)
-Kubernetes Components(kubectl, scheduler, replication controller, etcd datastore, kublet, kube-proxy)의 Hub로서 HTTP 및 HTTPS 기반의 RESTful API 제공
-Scheduler(kube-scheduler)
-어떤 Node에서 어떤 Pod가 실행될지 결정
-CPU, Memory, 얼마나 많은 Container가 해당 Node에서 작동 중인가 등에 기반한 알고리즘을 통해 Container 배치
-Resouce의 '공급'을 작업량의 '수요'와 일치시키는 것이 주 역할
-Controller Manager(kube-controller-manager)
+### Kubernetes Master
+* Kubernetes Cluster의 Main Component
+* __API Server(kube-apiserver)__
+    * Kubernetes Components(kubectl, scheduler, replication controller, etcd datastore, kublet, kube-proxy)의 Hub로서 HTTP 및 HTTPS 기반의 RESTful API 제공
+* __Scheduler(kube-scheduler)__
+    * 어떤 Node에서 어떤 Pod가 실행될지 결정
+    * CPU, Memory, 얼마나 많은 Container가 해당 Node에서 작동 중인가 등에 기반한 알고리즘을 통해 Container 배치
+    * Resouce의 '공급'을 작업량의 '수요'와 일치시키는 것이 주 역할
+* __Controller Manager(kube-controller-manager)__
 Kubernetes node들을 관리
 Kubernetes internal information을 생성하고 갱신
 DaemonSet Controller 및 Replication Controller와 같은 핵심 Kubernetes Controller 실행
@@ -60,7 +58,7 @@ etcd
 Cluster 설정 및 현재 상태(각 Node, Node에서 동작 중인 Pod등의 모든 상태) 저장
 
 
-Kubernetes Node(Minion)
+###Kubernetes Node(Minion)
 Kubernetes Cluster의 Slave(Work) node
 Kublet
 Node마다 한 개씩 가지는 일종의 Node(Worker) Agent
@@ -84,7 +82,8 @@ cAdvisor
 Network Plugin
 Network Plugin은 다음과 같은 것들이 있음
 Cluster Networking ACI, Cilium, Contiv, Contrail, Flannel, Google Compute Engine (GCE), Kube-router, L2 networks and linux bridging, Multus (a Multi Network plugin), NSX-T, Nuage Networks VCS (Virtualized Cloud Services), OpenVSwitch, OVN (Open Virtual Networking), Project Calico, Romana, Weave Net from Weaveworks, CNI-Genie from Huawei
-Object
+
+### Object
 Kubernetes의 상태를 나타내는 Entity
 Kubernetes API의 Endpoint로서 동작
 가장 기본적인 구성단위가 되는 Basic Object와 Basic Object를 생성하고 관리하는 등의 추가 기능을 가진 Controller로 이루어 짐
@@ -128,7 +127,7 @@ Pod, Replicaset, Volume 등을 그룹핑 및 구분하는 데에 사용
 Namespace별로 Resource Quota(자원할당량) 지정 가능 및 Resource를 나눠서 관리 가능
 
 
-Controller
+### Controller
 Object를 Spec에 정의 된 상태로 지속적으로 변화시키는 주체
 Object를 생성 및 관리
 Replication Controller
@@ -173,7 +172,7 @@ StatefulSet
 Database와 같이 상태를 가지는 Pod을 지원하기 위한 Controller
 
 
-Service
+### Service
 Pod들의 Persistent Endpoint 즉, Pod에 접근하는 방법을 기술하는 API
 Port나 Load Balancer에 대해 기술 할 수 있음
 Service는 IP 주소 할당방식 및 연동 서비스 등에 따라 크게 4가지로 구분
@@ -192,7 +191,8 @@ External name
 Service Discovery
 Container가 자동으로 배치되기 때문에 어디에 배치되었는지를 찾는 임무를 수행 
 Environment Variables, DNS 두 가지 방법으로 Service Discovery 수행
-Volume
+
+### Volume
 상세 Volume Types(https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes)
 Pod에 종속되는 디스크(Container 단위 X)
 Pod에 속해 있는 여러개의 Container가 공유 가능
@@ -217,7 +217,8 @@ azureDisk
 Fiber Channel
 Secret
 VshereVolume
-Health Check
+
+### Health Check
 Container의 상태를 주기적으로 체크해서, 문제가 있는 Container를 자동으로 재시작하거나 또는 문제가 있는 Container를 서비스에서 제외하는 기능
 살아있는지 아닌지를 체크하는 Liveness Probe와 서비스 가능한 상태인지를 체크하는 Readiness Probe가 있음
 체크 방법
