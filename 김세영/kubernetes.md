@@ -49,104 +49,104 @@
     * CPU, Memory, 얼마나 많은 Container가 해당 Node에서 작동 중인가 등에 기반한 알고리즘을 통해 Container 배치
     * Resouce의 '공급'을 작업량의 '수요'와 일치시키는 것이 주 역할
 * __Controller Manager(kube-controller-manager)__
-Kubernetes node들을 관리
-Kubernetes internal information을 생성하고 갱신
-DaemonSet Controller 및 Replication Controller와 같은 핵심 Kubernetes Controller 실행
-관리하는 Resouces(Pod, Service Endpoint, etc) 등을 생성, 업데이트, 삭제하기 위해 API 서버와 통신
-etcd
-분산 Key/Value의 저장소
-Cluster 설정 및 현재 상태(각 Node, Node에서 동작 중인 Pod등의 모든 상태) 저장
+    * Kubernetes node들을 관리
+    * Kubernetes internal information을 생성하고 갱신
+    * DaemonSet Controller 및 Replication Controller와 같은 핵심 Kubernetes Controller 실행
+    * 관리하는 Resouces(Pod, Service Endpoint, etc) 등을 생성, 업데이트, 삭제하기 위해 API 서버와 통신
+* __etcd__
+    * 분산 Key/Value의 저장소
+    * Cluster 설정 및 현재 상태(각 Node, Node에서 동작 중인 Pod등의 모든 상태) 저장
 
 
 ###Kubernetes Node(Minion)
-Kubernetes Cluster의 Slave(Work) node
-Kublet
-Node마다 한 개씩 가지는 일종의 Node(Worker) Agent
-Sevice, Pod를 실행/중지하고 Desired 상태를 유지시킴
-주기적으로 API Server에 Node의 상태를 Check&Report Access
-Proxy(kube-proxy)
-Network Proxy + Load Balancer의 역할
-외부의 요청을 분산되어 있는 Pod으로 전달
-Pod
-Kubernetes의 가장 작은 배포 단위
-1개의 Pod는 내부에 여러 개의 컨테이너를 가질 수 있으나 대부분 1~2개의 컨테이너를 가짐
-1개의 Pod는 여러개의 물리 서버에 나눠지는 것이 아니고 1개의 물리서버(Node)위에 올라 감
-Pod 내부의 컨테이너들은 네트워크와 볼륨을 공유하기 때문에 Localhost로 통신 가능
-Pod는 Cluster 내부에서 사용할 수 있는 유니크한 단독 네트워크 IP를 할당 받지만 해당 IP를 서비스에서 사용하지는 않음
-Kubernetes에서 Pod는 언젠가 죽는(mortal) Object이기 때문
-동일 작업을 수행하는 Pod는 ReplicaSet이라는 Controller에 의해 정해진 Rule에 따라 복제 됨
-이 경우 복수의 Pod이 여러개의 Node에 걸쳐 실행 될 수 있음
-cAdvisor
-동작중인 Container의 Resource 사용량과 Performance를 모니터링
-모니터링 한 결과는 Kublet에 의해 API Server로 전달
-Network Plugin
-Network Plugin은 다음과 같은 것들이 있음
-Cluster Networking ACI, Cilium, Contiv, Contrail, Flannel, Google Compute Engine (GCE), Kube-router, L2 networks and linux bridging, Multus (a Multi Network plugin), NSX-T, Nuage Networks VCS (Virtualized Cloud Services), OpenVSwitch, OVN (Open Virtual Networking), Project Calico, Romana, Weave Net from Weaveworks, CNI-Genie from Huawei
+* Kubernetes Cluster의 Slave(Work) node
+* __Kublet__
+    * Node마다 한 개씩 가지는 일종의 Node(Worker) Agent
+    * Sevice, Pod를 실행/중지하고 Desired 상태를 유지시킴
+    * 주기적으로 API Server에 Node의 상태를 Check&Report Access
+* __Proxy(kube-proxy)__
+    * Network Proxy + Load Balancer의 역할
+    * 외부의 요청을 분산되어 있는 Pod으로 전달
+* __Pod__
+    * Kubernetes의 가장 작은 배포 단위
+    * 1개의 Pod는 내부에 여러 개의 컨테이너를 가질 수 있으나 대부분 1~2개의 컨테이너를 가짐
+    * 1개의 Pod는 여러개의 물리 서버에 나눠지는 것이 아니고 1개의 물리서버(Node)위에 올라 감
+    * Pod 내부의 컨테이너들은 네트워크와 볼륨을 공유하기 때문에 Localhost로 통신 가능
+    * Pod는 Cluster 내부에서 사용할 수 있는 유니크한 단독 네트워크 IP를 할당 받지만 해당 IP를 서비스에서 사용하지는 않음
+    * Kubernetes에서 Pod는 언젠가 죽는(mortal) Object이기 때문
+    * 동일 작업을 수행하는 Pod는 ReplicaSet이라는 Controller에 의해 정해진 Rule에 따라 복제 됨
+    * 이 경우 복수의 Pod이 여러개의 Node에 걸쳐 실행 될 수 있음
+* __cAdvisor__
+    * 동작중인 Container의 Resource 사용량과 Performance를 모니터링
+    * 모니터링 한 결과는 Kublet에 의해 API Server로 전달
+* __Network Plugin__
+    * Network Plugin은 다음과 같은 것들이 있음
+    * Cluster Networking ACI, Cilium, Contiv, Contrail, Flannel, Google Compute Engine (GCE), Kube-router, L2 networks and linux bridging, Multus (a Multi Network plugin), NSX-T, Nuage Networks VCS (Virtualized Cloud Services), OpenVSwitch, OVN (Open Virtual Networking), Project Calico, Romana, Weave Net from Weaveworks, CNI-Genie from Huawei
 
 ### Object
-Kubernetes의 상태를 나타내는 Entity
-Kubernetes API의 Endpoint로서 동작
-가장 기본적인 구성단위가 되는 Basic Object와 Basic Object를 생성하고 관리하는 등의 추가 기능을 가진 Controller로 이루어 짐
-사용자가 기대하는 상태(Desired State)를 알 수 있는 Spec과 Desired State 대비 현재 상태를 나타내는 Status 필드를 가짐
-Object의 Status를 갱신하고 Spec에 정의 된 상태로 지속적으로 변화시키는 주체가 Controller
-Object Spec
-Object의 특성(설정 정보)을 기술하여 Object를 정의
-Command Line을 통해 Object 생성 시 인자로 전달하여 정의하거나 .yaml이나 .json으로 정의 가능
-Basic Object
-Kubernetes에 의해 배포 및 관리되는 가장 기본적인 Object
-Container화 되어 배포되는 Application의 Workload를 기술하는 Object
-Pod
-Service
-Volume
-Namespace
-Pod
-Kubernetes에서 가장 기본적인 배포 단위Container를 포함하는 단위
-Container를 개별적으로 하나씩 배포하는 것이 아니라 Pod라는 단위로 배포
-Pod는 하나 이상의 Container를 포함Pod의 특징
-Pod 내의 Container는 IP와 Port를 공유
-Pod 내에 배포 된 Container 간에는 Disk Volume의 공유가 가능라우팅 가능 한 IP를 가짐
-Kubernetes에서 Pod는 언젠가는 반드시 죽는(mortal) Object이기 때문
-Service를 Pod에 연결했을 경우 Pod의 특정 포트가 외부로 노출됨
-Service
-Pod들의 Persistent Endpoint
-Service는 Pod 묶음의 Proxy로서 존재
-Label과 Label Selector를 이용해 로드밸런서에서 Pod의 목록을 지정
-각 Pod에 지정 된 Label을 보고 서비스의 Label Selector에서 선택
-Volume
-Pod이 기동될 때 Container에 기본적으로 생성되는 Local Disk는 영구적이지 못하기 때문에 Container의 재기동, 새로 배포할 시에 그 내용이 유실 됨
-DB와 같이 영구적으로 저장해야하는 파일의 경우 Container의 재기동에 상관없이 영속적으로 저장 필요
-이 때 사용되는 것이 볼륨
-일종의 Container 용 외장 디스크
-Pod가 기동 될 때 마운트해서 사용
-Kubernetes의 볼륨은 Pod내 Container간에 공유 가능
-Namespace
-Kubernetes Cluster 내의 논리적인 분리 단위
-물리적 분리가 아니기 때문에 다른 Namespace간의 Pod라도 서로간에 통신은 가능
-Pod, Replicaset, Volume 등을 그룹핑 및 구분하는 데에 사용
-사용자별로 Namespace별 권한을 다르게 운영 가능
-Namespace별로 Resource Quota(자원할당량) 지정 가능 및 Resource를 나눠서 관리 가능
+* Kubernetes의 상태를 나타내는 Entity
+* Kubernetes API의 Endpoint로서 동작
+* 가장 기본적인 구성단위가 되는 Basic Object와 Basic Object를 생성하고 관리하는 등의 추가 기능을 가진 Controller로 이루어 짐
+* 사용자가 기대하는 상태(Desired State)를 알 수 있는 Spec과 Desired State 대비 현재 상태를 나타내는 * Status 필드를 가짐
+    * Object의 Status를 갱신하고 Spec에 정의 된 상태로 지속적으로 변화시키는 주체가 Controller
+* __Object Spec__
+    * Object의 특성(설정 정보)을 기술하여 Object를 정의
+    * Command Line을 통해 Object 생성 시 인자로 전달하여 정의하거나 .yaml이나 .json으로 정의 가능
+* __Basic Object__
+    * Kubernetes에 의해 배포 및 관리되는 가장 기본적인 Object
+    * Container화 되어 배포되는 Application의 Workload를 기술하는 Object
+        * Pod
+        * Service
+        * Volume
+        * Namespace
+* __Pod__
+    * Kubernetes에서 가장 기본적인 배포 단위Container를 포함하는 단위
+    * Container를 개별적으로 하나씩 배포하는 것이 아니라 Pod라는 단위로 배포
+    * Pod는 하나 이상의 Container를 포함Pod의 특징
+    * Pod 내의 Container는 IP와 Port를 공유
+    * Pod 내에 배포 된 Container 간에는 Disk Volume의 공유가 가능라우팅 가능 한 IP를 가짐
+    * Kubernetes에서 Pod는 언젠가는 반드시 죽는(mortal) Object이기 때문
+    * Service를 Pod에 연결했을 경우 Pod의 특정 포트가 외부로 노출됨
+* __Service__
+    * Pod들의 Persistent Endpoint
+    * Service는 Pod 묶음의 Proxy로서 존재
+    * Label과 Label Selector를 이용해 로드밸런서에서 Pod의 목록을 지정
+    * 각 Pod에 지정 된 Label을 보고 서비스의 Label Selector에서 선택
+* __Volume__
+    * Pod이 기동될 때 Container에 기본적으로 생성되는 Local Disk는 영구적이지 못하기 때문에 Container의 재기동, 새로 배포할 시에 그 내용이 유실 됨
+    * DB와 같이 영구적으로 저장해야하는 파일의 경우 Container의 재기동에 상관없이 영속적으로 저장 필요
+    * 이 때 사용되는 것이 볼륨
+    * 일종의 Container 용 외장 디스크
+    * Pod가 기동 될 때 마운트해서 사용
+    * Kubernetes의 볼륨은 Pod내 Container간에 공유 가능
+* __Namespace__
+    * Kubernetes Cluster 내의 논리적인 분리 단위
+    * 물리적 분리가 아니기 때문에 다른 Namespace간의 Pod라도 서로간에 통신은 가능
+    * Pod, Replicaset, Volume 등을 그룹핑 및 구분하는 데에 사용
+    * 사용자별로 Namespace별 권한을 다르게 운영 가능
+    * Namespace별로 Resource Quota(자원할당량) 지정 가능 및 Resource를 나눠서 관리 가능
 
 
 ### Controller
-Object를 Spec에 정의 된 상태로 지속적으로 변화시키는 주체
-Object를 생성 및 관리
-Replication Controller
-Replication Set
-DaemonSet
-Job
-StatefulSet
-Deployment
-Replication Controller
-Pod를 관리해주는 역할
-지정 된 숫자로 Pod를 기동시키고 관리
-Replica의 수, Pod Selector, Pod Template 3가지로 구성
-Replica 수: Replication Controller에 의해서 관리되는 Pod의 수, 그 수만큼 Pod의 수를 유지
-Selector: Label을 기반으로 Replication Controller가 관리하는 Pod를 가져오기 위해 사용
-Pod Template: Pod를 추가로 기동할 경우 Pod 생성에 필요한 정보(Docker 이미지, Port, Label 등)를 정의
-ReplicationSet
-Replication의 새 버전, 차세대 Replication Controller
-Replication Controller는 점차 사용되지 않을 예정으로 기존의 Replication Controller의 역할은 ReplicationSet과 Deployment가 대신
-Set 기반의 Selector 사용(Replication Controller는 Equality 기반 Selector 사용)
+* Object를 Spec에 정의 된 상태로 지속적으로 변화시키는 주체
+* Object를 생성 및 관리
+    * Replication Controller
+    * Replication Set
+    * DaemonSet
+    * Job
+    * StatefulSet
+    * Deployment
+* __Replication Controller__
+    * Pod를 관리해주는 역할
+        * 지정 된 숫자로 Pod를 기동시키고 관리
+    * Replica의 수, Pod Selector, Pod Template 3가지로 구성
+        * Replica 수: Replication Controller에 의해서 관리되는 Pod의 수, 그 수만큼 Pod의 수를 유지
+        * Selector: Label을 기반으로 Replication Controller가 관리하는 Pod를 가져오기 위해 사용
+        * Pod Template: Pod를 추가로 기동할 경우 Pod 생성에 필요한 정보(Docker 이미지, Port, Label 등)를 정의
+* __ReplicationSet__
+    * Replication의 새 버전, 차세대 Replication Controller
+        * Replication Controller는 점차 사용되지 않을 예정으로 기존의 Replication Controller의 역할은 ReplicationSet과 Deployment가 대신
+    * Set 기반의 Selector 사용(Replication Controller는 Equality 기반 Selector 사용)
 Deployment
 Replication Controller와 ReplicaSet의 좀 더 상위의 추상화 개념
 실제 운영에서는 앞선 두 Controller보다 더 많이 사용하게 됨
