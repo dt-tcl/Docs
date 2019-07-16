@@ -18,6 +18,5 @@ Docs 형식으로 여기에 정리하기
 * hadoop_on_docker.md (https://github.com/dt-tcl/Docs/blob/master/%EC%9D%B4%EC%88%98%EA%B2%BD/hadoop_on_docker.md)
 
 ### 황소희
-*
-
+* Data분석론.pdf (https://github.com/dt-tcl/Docs/blob/master/Sohee/Data분석론.pdf)
 
