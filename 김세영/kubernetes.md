@@ -58,7 +58,7 @@
     * Cluster 설정 및 현재 상태(각 Node, Node에서 동작 중인 Pod등의 모든 상태) 저장
 
 
-###Kubernetes Node(Minion)
+### Kubernetes Node(Minion)
 * Kubernetes Cluster의 Slave(Work) node
 * __Kublet__
     * Node마다 한 개씩 가지는 일종의 Node(Worker) Agent
@@ -147,81 +147,71 @@
     * Replication의 새 버전, 차세대 Replication Controller
         * Replication Controller는 점차 사용되지 않을 예정으로 기존의 Replication Controller의 역할은 ReplicationSet과 Deployment가 대신
     * Set 기반의 Selector 사용(Replication Controller는 Equality 기반 Selector 사용)
-Deployment
-Replication Controller와 ReplicaSet의 좀 더 상위의 추상화 개념
-실제 운영에서는 앞선 두 Controller보다 더 많이 사용하게 됨
-Application의 배포/삭제, Scale out의 역할
-Deployment 생성 시 Deployment가 Pod와 ReplicaSets을 함께 생성
-Pod에 Containerized Application들이 포함되고 Pod이 생성되면서 Application이 배포되는 원리
-ReplicaSets은 Replica 수를 지속적으로 모니터링하고 유지 시켜 줌
-DaemonSet
-Pod가 각각의 Node에서 하나씩만 돌게 하는 형태로 Pod을 관리하는 Controller
-Job
-원타임 작업이 필요한 경우처럼 Pod가 유지 될 필요가 없는 작업을 할 경우 사용되는 Controller
-Job이 종료되면 Pod를 같이 종료
-Container의 Spec에 Image 뿐만 아니라 Job을 수행하기 위한 Command를 같이 입력
-Job이 비정상적으로 종료될 시 
-장애시 다시 시작 여부를 결정(Restart)
-같은 작업을 여러번 수행해야하는 경우 Pod를 순차적으로, 여러번 실행하도록 설정
-completion 횟수를 Job 설정에 기입
-순차성이 필요 없고 병렬로 처리 가능한 일
-parallelism에 동시에 실행할 수 있는 Pod의 수 기입
-Cronjob
-정해진 스케쥴에 따라 Job Controller에 의해 작업을 실행해주는 Controller
-StatefulSet
-Database와 같이 상태를 가지는 Pod을 지원하기 위한 Controller
+* __Deployment__
+    * Replication Controller와 ReplicaSet의 좀 더 상위의 추상화 개념
+    * 실제 운영에서는 앞선 두 Controller보다 더 많이 사용하게 됨
+    * Application의 배포/삭제, Scale out의 역할
+    * Deployment 생성 시 Deployment가 Pod와 ReplicaSets을 함께 생성
+        * Pod에 Containerized Application들이 포함되고 Pod이 생성되면서 Application이 배포되는 원리
+        * ReplicaSets은 Replica 수를 지속적으로 모니터링하고 유지 시켜 줌
+* __DaemonSet__
+    * Pod가 각각의 Node에서 하나씩만 돌게 하는 형태로 Pod을 관리하는 Controller
+* __Job__
+    * 원타임 작업이 필요한 경우처럼 Pod가 유지 될 필요가 없는 작업을 할 경우 사용되는 Controller
+    * Job이 종료되면 Pod를 같이 종료
+    * Container의 Spec에 Image 뿐만 아니라 Job을 수행하기 위한 Command를 같이 입력
+    * Job이 비정상적으로 종료될 시 
+        * 장애시 다시 시작 여부를 결정(Restart)
+    * 같은 작업을 여러번 수행해야하는 경우 Pod를 순차적으로, 여러번 실행하도록 설정
+        * completion 횟수를 Job 설정에 기입
+    * 순차성이 필요 없고 병렬로 처리 가능한 일
+        * parallelism에 동시에 실행할 수 있는 Pod의 수 기입
+    * Cronjob
+        * 정해진 스케쥴에 따라 Job Controller에 의해 작업을 실행해주는 Controller
+* __StatefulSet__
+    * Database와 같이 상태를 가지는 Pod을 지원하기 위한 Controller
 
 
 ### Service
-Pod들의 Persistent Endpoint 즉, Pod에 접근하는 방법을 기술하는 API
-Port나 Load Balancer에 대해 기술 할 수 있음
-Service는 IP 주소 할당방식 및 연동 서비스 등에 따라 크게 4가지로 구분
-Cluster IP
-Default 설정
-Service에 Cluster IP(내부 IP)를 할당
-Kubernetes 내부에서는 접근 가능하나 외부에서는 접근 불가
-Load Balancer
-보통 Cloud Vendor에서 제공하는 설정 방식
-외부 IP를 가지고 있는 Load Balancer를 할당
-외부에서 접근 가능
-Node IP
-Cluster IP 뿐만 아니라 모든 Node의 IP와 Port를 통해서 접근 가능
-External name
-외부 Service를 Kubernetes 내부에서 호출하고자 할 때 사용
-Service Discovery
-Container가 자동으로 배치되기 때문에 어디에 배치되었는지를 찾는 임무를 수행 
-Environment Variables, DNS 두 가지 방법으로 Service Discovery 수행
+* Pod들의 Persistent Endpoint 즉, Pod에 접근하는 방법을 기술하는 API
+* Port나 Load Balancer에 대해 기술 할 수 있음
+* Service는 IP 주소 할당방식 및 연동 서비스 등에 따라 크게 4가지로 구분
+    * __Cluster IP__
+        * Default 설정
+        * Service에 Cluster IP(내부 IP)를 할당
+        * Kubernetes 내부에서는 접근 가능하나 외부에서는 접근 불가
+    * __Load Balancer__
+        * 보통 Cloud Vendor에서 제공하는 설정 방식
+        * 외부 IP를 가지고 있는 Load Balancer를 할당
+        * 외부에서 접근 가능
+    * __Node IP__
+        * Cluster IP 뿐만 아니라 모든 Node의 IP와 Port를 통해서 접근 가능
+    * __External name__
+        * 외부 Service를 Kubernetes 내부에서 호출하고자 할 때 사용
+* __Service Discovery__
+    * Container가 자동으로 배치되기 때문에 어디에 배치되었는지를 찾는 임무를 수행 
+    * Environment Variables, DNS 두 가지 방법으로 Service Discovery 수행
 
 ### Volume
-상세 Volume Types(https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes)
-Pod에 종속되는 디스크(Container 단위 X)
-Pod에 속해 있는 여러개의 Container가 공유 가능
-Volume의 종류
-Temp
-emptyDir
-Pod가 생성될 때 생성되고 삭제될 때 같이 삭제되는 임시 Volume
-Local
-hostPath
-Node의 Local Disk의 경로를 Pod에 마운트하여 사용
-같은 hostPath에 있는 Volume은 여러 Pod 사이에서 공유되어 사용됨
-Pod가 삭제되더라도 hostPath에 있는 파일들은 삭제되지 않고 다른 Pod가 같은 hostPath를 마운트하게 되면, 파일에 액세스 가능
-Pod 재시작하여 다른 Node에서 재기동 될 경우 기존의 Node에서 사용한 hostPath의 파일에는 액세스 불가
-Network
-GlusterFS
-gitRepo
-NFS
-iSCSI
-gcePersistentDisk
-AWS EBS
-azureDisk
-Fiber Channel
-Secret
-VshereVolume
-
-### Health Check
-Container의 상태를 주기적으로 체크해서, 문제가 있는 Container를 자동으로 재시작하거나 또는 문제가 있는 Container를 서비스에서 제외하는 기능
-살아있는지 아닌지를 체크하는 Liveness Probe와 서비스 가능한 상태인지를 체크하는 Readiness Probe가 있음
-체크 방법
-Command Probe
-HTTP Probe
-TCP Probe
+* 상세 Volume Types(https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes)
+* Pod에 종속되는 디스크(Container 단위 X)
+    * Pod에 속해 있는 여러개의 Container가 공유 가능
+    * Volume의 종류
+        * Temp
+            * emptyDir
+                * Pod가 생성될 때 생성되고 삭제될 때 같이 삭제되는 임시 Volume
+        * Local
+            * hostPath
+                * Node의 Local Disk의 경로를 Pod에 마운트하여 사용
+                * 같은 hostPath에 있는 Volume은 여러 Pod 사이에서 공유되어 사용됨
+                * Pod가 삭제되더라도 hostPath에 있는 파일들은 삭제되지 않고 다른 Pod가 같은 hostPath를 마운트하게 되면, 파일에 액세스 가능
+                    * Pod 재시작하여 다른 Node에서 재기동 될 경우 기존의 Node에서 사용한 hostPath의 파일에는 액세스 불가
+        * Network
+            * GlusterFS
+            * gitRepo
+            * NFS
+            * iSCSI
+            * gcePersistentDisk
+            * AWS EBS
+            * azureDisk
+            * VshereVolume
