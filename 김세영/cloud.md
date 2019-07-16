@@ -35,6 +35,7 @@
 * 레고 블럭
 * 흔히들 Kubernetes를 PaaS라고 하지만 엄연히 따지면 Kubernetes는 PaaS와 비슷할 뿐 PaaS는 아님
     * Container as a Service(CaaS)?라고 볼 수 있음
+    * CaaS는 굳이 따지자면 IaaS와 PaaS의 사이..? 레고 공장에서 레고 블럭을 만들어내는 틀 쯤..? - 어디까지나 내 생각
 
 ### Infrastructure as a Service (IaaS)
 * 서버 또는 스토리지 등을 사용자에게 서비스 형태로 제공
