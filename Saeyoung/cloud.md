@@ -44,6 +44,8 @@
 * 예) CloudZ, IBM Cloud, Amazon AWS, MS Azure 등
 * 레고 공장
 
+![Alt text](image/cloud_service_model.png)
+
 ## Cloud Computing 배포 모델
 ### Private Cloud
 * Enterprise owned or leased
