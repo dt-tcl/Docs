@@ -5,6 +5,8 @@ Docs 형식으로 여기에 정리하기
 
 ### 김세영
 * example.md (https://github.com/dt-tcl/Docs/김세영/example.md)
+* cloud.md (https://github.com/dt-tcl/Docs/blob/master/%EA%B9%80%EC%84%B8%EC%98%81/cloud.md)
+* kubernetes.md (https://github.com/dt-tcl/Docs/blob/master/%EA%B9%80%EC%84%B8%EC%98%81/kubernetes.md)
 
 ### 김영재
 *
