@@ -1,7 +1,7 @@
 (수정중)
 
 # Hadoop 소개
-![image](https://github.com/dt-tcl/Docs/new/master/Suekyung/image/hadoop.PNG?raw=true)
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop.png?raw=true)
 * 여러 대의 컴퓨터 클러스터에서 대규모 데이터 세트를 분산 처리 할 수 있게 해주는 자바 기반의 오픈소스 프레임워크
 * 단일 서버에서 수천대의 머신으로 확장 가능(Scale Out)
 * 초기에는 HDFS(Hadoop File System)과 MapReduce 프레임워크로 시작되었으나, 다양한 데이터 저장, 실행엔진, 프로그래밍 및 데이터 처리와 같은 하둡 생태계 전반(Hadoop Ecosustem)을 포함하는 의미로 확장됨.
@@ -19,7 +19,7 @@
   * 하트비트는 네임노드가 데이터노드의 동작여부를 판단하는데 이용.
   
 ## Hadoop Ecosystem
-![image](https://github.com/dt-tcl/Docs/new/master/Suekyung/image/hadoop_eco.PNG?raw=true)
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop_eco.png?raw=true)
 ### 분산 리소스 관리
 * YARN
   * 병렬처리를 위한 클러스터 자원(CPU, 메모리, 디스크 등) 관리 및 스케쥴링 담당.
