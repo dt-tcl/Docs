@@ -1,14 +1,16 @@
 (수정중)
 
 # Hadoop 소개
-<center><img src="/Suekyung/image/hadoop.png"></center>
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop.png?raw=true)
 * 여러 대의 컴퓨터 클러스터에서 대규모 데이터 세트를 분산 처리 할 수 있게 해주는 자바 기반의 오픈소스 프레임워크
 * 단일 서버에서 수천대의 머신으로 확장 가능(Scale Out)
 * 초기에는 HDFS(Hadoop File System)과 MapReduce 프레임워크로 시작되었으나, 다양한 데이터 저장, 실행엔진, 프로그래밍 및 데이터 처리와 같은 하둡 생태계 전반(Hadoop Ecosustem)을 포함하는 의미로 확장됨.
 
 ## Hadoop 아키텍처
+* Hadoop의 Core는 HDFS와 YARN임.
 
 ### HDFS 아키텍처
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hdfs.png?raw=true)
 * HDFS는 네임노드와 데이터노드로 이루어져 있음.
 * 네임노드
   * 네임노드는 HDFS에서 마스터역할을 하며, 메타데이터 관리와 데이터노드의 관리를 담당.
@@ -17,7 +19,33 @@
   * 데이터노드는 Slave 역할을 하며, 파일을 저장하는 역할을 함.
   * 파일은 블록단위로 저장되며, 주기적으로 네임노드에 하트비트와 블록 리포트를 전달함.
   * 하트비트는 네임노드가 데이터노드의 동작여부를 판단하는데 이용.
-  
+
+### YARN 아키텍처
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/yarn.gif?raw=true)
+* Resource Manager
+ * Yarn의 마스터 서버로 하나 또는 이중화를 위해 두개의 서버에만 실행됨.
+ * 클러스터 자원관리로 최적의 데이터 노드를 찾아줌.
+ * 전체 클러스터에서 사용할 수 있는 모든 시스템 자원(CPU, 메모리, 디스크, 네트워크 등)들을 관리
+ * Yarn 클러스터에서 실행되는 프로그램이 리소스를 요청하면 적절하게 분배하고 리소스 사용상태를 모니터링함.
+* Node Manager
+ * YARN의 worker 서버
+ * MapReduce의 TaskTracker 기능 담당
+ * 컨테이너를 실행시키고, 컨테이너의 라이프 사이틀 모니터링
+ * 컨테이너 장애상황 모니터링
+ * 컨테이너가 요청한 리소스 보다 많이 사용하고 있는지 감시
+* Container
+ * 노드매니저가 실행되는 서버의 자원을 표현(CPU, Disk, Memory, Network..)
+ * 리소스 매니저가 요청에 의해 컨테이너가 실행
+ * 하나의 서버에 여러 컨테이너 있을 수 있음
+ * 맵리듀스의 태스크트래커가 태스크 단위로 잡을 실행한것 처럼 노드매니저는 컨테이너를 단위로 애플리케이션을 실행하고 각 상태를 스케줄링
+* Application Master
+ * 하나의 애플리케이션(프로그램)을 관리하는 마스터서버
+ * 클라이언트가 얀에 애플리케이션 실행을 요청하면 Yarn은 하나의 애플리케이션에 하나의 애플리케이션 마스터를 할당
+ * 예를 들어, Yarn 클러스터에 ‘맵리듀스 잡’과 ‘스톰 애플리케이션’ 실행을 요청하면 두개의 애플리케이션 마스터가 실행
+ * 애플리케이션에 필요한 리소스를 스케줄링
+ * 노드매니저에게 애플리케이션에 필요한 컨테이너를 실행시킬 것을 요청
+ * 애플리케이션 마스터는 컨네이터에서 실행됨
+
 ## Hadoop Ecosystem
 ![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop_eco.png?raw=true)
 ### 분산 리소스 관리
@@ -83,6 +111,6 @@
 ### 데이터 시각화
 * Zeppelin
   * 빅데이터 분석가를 위한 웹 기반의 분석 도구이며, 분석 결과를 즉시 표, 그래프로 표현하는 시각화까지 지원
-  * iPython의 Notebook과 유사한 기능을 제공하며, 분석가는 이를통해 손쉽게 데이터를 추출, 정제, 분석, 공유할 수 있ㅇ므.
-  * Spark, Hive, Flink, ElasticSearch, DBMS 등 다양한 분석 플랫폼과 연동 간으.
+  * iPython의 Notebook과 유사한 기능을 제공하며, 분석가는 이를통해 손쉽게 데이터를 추출, 정제, 분석, 공유할 수 있음.
+  * Spark, Hive, Flink, ElasticSearch, DBMS 등 다양한 분석 플랫폼과 연동 가능.
   
