@@ -124,7 +124,7 @@
   * iPython의 Notebook과 유사한 기능을 제공하며, 분석가는 이를통해 손쉽게 데이터를 추출, 정제, 분석, 공유할 수 있음.
   * Spark, Hive, Flink, ElasticSearch, DBMS 등 다양한 분석 플랫폼과 연동 가능.
  
-![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop_ach.png?raw=true)
+![image](https://github.com/dt-tcl/Docs/blob/master/Suekyung/image/hadoop_ach.PNG?raw=true)
 * DataNode에 Kafka Cluster 함께 구성 - 메모리 OS(20%). Yarn(60%). Kafka(20%) 할당
 * KDC 서버 별도 구성
 * Open LDAP + Ranger로 인증/권한 (각각 이중화 구성)
