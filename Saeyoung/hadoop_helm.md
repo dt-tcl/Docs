@@ -1,4 +1,4 @@
-helm fetch stable/hadoop
+```helm fetch stable/hadoop
 helm install --set yarn.nodeManager.resources.limits.memory=4096Mi --set yarn.nodeManager.replicas=1 stable/hadoop --tls
 
 kubectl exec -n default -it lumpy-narwhal-hadoop-hdfs-nn-0 -- /usr/local/hadoop/bin/hdfs dfsadmin -report
@@ -8,3 +8,4 @@ kubectl exec -n default -it lumpy-narwhal-hadoop-yarn-rm-0 -- /usr/local/hadoop/
 
 helm fetch stable/zeppelin
 helm install --namespace default --set hadoop.useConfigMap=true,hadoop.configMapName=lumpy-narwhal-hadoop stable/zeppelin --tls
+```
